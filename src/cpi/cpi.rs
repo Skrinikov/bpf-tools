@@ -119,7 +119,6 @@ fn do_main(runnable: Arc<AtomicBool>) -> Result<(), BccError> {
             let cycles = cycles_map.get(&key).unwrap_or(&0);
             let cpi = *cycles as f32 / *value as f32;
 
-            total_cycles += *cycles;
             total_instr += *value;
 
             println!("{:<-8} {:<-4} {:>12} {:>12} {:>8}", key.0, key.1, cycles, value, cpi);
@@ -137,11 +136,16 @@ fn do_main(runnable: Arc<AtomicBool>) -> Result<(), BccError> {
             let cycles = cycles_map.get(&key).unwrap_or(&0);
             let cpi = *cycles as f32 / *value as f32;
 
-            total_cycles += *cycles;
             total_instr += *value;
 
             println!("{:<-8} {:>12} {:>12} {:>8}", key, cycles, value, cpi);
         }
+    }
+
+    // In case some cycle don't have an intruction entry
+    for entry in cycle_table.iter() {
+        let value = parse_u64(entry.value);
+        total_cycles += value;
     }
 
     println!("{:<-12} {:<-12} {:<-12}", "TOTAL_CYCLES", "TOTAL_INSTR", "CPI");
