@@ -70,7 +70,7 @@ fn do_main(runnable: Arc<AtomicBool>) -> Result<(), BccError> {
         .map(|v| v.parse().expect("Invalid duration"))
         .unwrap_or(DEFAULT_DURATION);
 
-    let mut code = include_str!("cpi.c").to_string();
+    let mut code = include_str!("bpf.c").to_string();
     if matches.is_present("percpu") {
         code = format!("{}\n{}", "#define PERCPU", code);
     }

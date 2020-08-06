@@ -17,6 +17,10 @@ ctrlc = "3.1.4"
 failure = "0.1.8"
 
 [[bin]]
+name = "cpi"
+path = "src/cpi/main.rs"
+
+[[bin]]
 name = "hardirqs"
 path = "src/hardirqs/main.rs"
 
